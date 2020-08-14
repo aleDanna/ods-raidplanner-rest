@@ -27,9 +27,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class RaidService {
 
-    @Value("${recurrent.time}")
-    private Integer recurrentTime;
-
     @Autowired
     private DTOMapper dtoMapper;
 
@@ -56,15 +53,17 @@ public class RaidService {
     }
 
     public RaidDTO saveRaid(RaidDTO raid, boolean recurrent) throws ODSException {
-        int numOfSaves = recurrent ? recurrentTime : 1;
         try {
             Raid result = raidRepository.save(dtoMapper.toEntity(raid));
-            int i = 1;
-            while (i < numOfSaves) {
-                raid.setStartDate(raid.getStartDate().plusMonths(1));
-                raid.setEndDate(raid.getEndDate().plusMonths(1));
-                raidRepository.save(dtoMapper.toEntity(raid));
-                i++;
+            if (recurrent) {
+                int month = raid.getStartDate().getMonth().getValue();
+                while (month == raid.getStartDate().getMonth().getValue()) {
+                    raid.setStartDate(raid.getStartDate().plusDays(7));
+                    raid.setEndDate(raid.getEndDate().plusDays(7));
+                    if (month == raid.getStartDate().getMonth().getValue()) {
+                        raidRepository.save(dtoMapper.toEntity(raid));
+                    }
+                }
             }
             return dtoMapper.toDto(result);
         } catch (Exception e) {
