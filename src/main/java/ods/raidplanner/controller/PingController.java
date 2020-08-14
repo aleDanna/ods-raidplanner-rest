@@ -17,14 +17,9 @@ public class PingController {
     @Value("${frontend.ping.url}")
     private String frontendPingUrl;
 
-    @GetMapping(value = "/", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity getCharacterRoles() {
+    @GetMapping(value = "/check", produces = APPLICATION_JSON_VALUE)
+    public void pingCheck() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response
-                = restTemplate.getForEntity(frontendPingUrl, String.class);
-        if(response.getStatusCode().equals(HttpStatus.OK)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+        restTemplate.getForEntity(frontendPingUrl, String.class);
     }
 }
