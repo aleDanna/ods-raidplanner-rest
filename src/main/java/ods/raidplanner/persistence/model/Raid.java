@@ -22,7 +22,7 @@ public class Raid extends ODSEntity {
     @JoinColumn(name = "group_ref")
     private RaidGroup raidGroup;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "raid")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "raid", cascade = CascadeType.REMOVE)
     private List<Subscription> subscriptions;
 
     @Override
