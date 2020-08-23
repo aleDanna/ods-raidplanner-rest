@@ -64,12 +64,11 @@ public class UserService {
         }
     }
 
-    public UserDTO getUserByEsoUsername(String esoUsername) throws ODSException {
-        try {
-            User user = userRepository.findByEsoUsername(esoUsername);
-            return dtoMapper.toDto(user);
-        } catch (Exception e) {
-            throw new ODSException(e.getMessage());
+    public UserDTO getUserByEsoUsername(String esoUsername) throws NotFoundException {
+        User user = userRepository.findByEsoUsername(esoUsername);
+        if (user == null) {
+            throw new NotFoundException(esoUsername, User.class);
         }
+        return dtoMapper.toDto(user);
     }
 }

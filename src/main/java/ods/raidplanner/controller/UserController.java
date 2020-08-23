@@ -68,8 +68,9 @@ public class UserController {
         try {
             UserDTO result = userService.getUserByEsoUsername(esoUsername);
             return ResponseEntity.ok(result);
-        } catch (ODSException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+        catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
