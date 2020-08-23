@@ -10,6 +10,10 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface DTOMapper {
 
+    ODSDTO toDto(ODSEntity entity);
+
+    ODSEntity toEntity(ODSDTO dto);
+
     RaidGroupDTO toDto(RaidGroup entity);
 
     Raid toEntity(RaidDTO dto);

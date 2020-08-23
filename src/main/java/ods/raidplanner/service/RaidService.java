@@ -83,6 +83,7 @@ public class RaidService {
         try {
             for (SubscriptionDTO dto : subscriptions) {
                 Subscription subscription = dtoMapper.toEntity(dto);
+                subscription.setId(dto.getId());    //TODO investigate why it is not auto set?
                 Raid raid = raidRepository.findById(dto.getRaidId()).orElse(null);
                 subscription.setRaid(raid);
                 subscriptionRepository.save(subscription);

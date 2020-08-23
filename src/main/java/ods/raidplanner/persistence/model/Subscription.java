@@ -25,7 +25,6 @@ public class Subscription extends ODSEntity {
         return "Subscription{" +
                 "groupNumber=" + groupNumber +
                 ", character=" + character.getId() +
-                ", raid=" + raid.getId() +
                 '}';
     }
 }

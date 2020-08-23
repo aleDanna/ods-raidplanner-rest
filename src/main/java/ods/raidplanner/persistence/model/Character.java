@@ -31,7 +31,7 @@ public class Character extends ODSEntity {
         return "Character{" +
                 "name='" + name + '\'' +
                 ", role=" + role +
-                ", user=" + user.getId() +
+                ", user=" + user +
                 '}';
     }
 }
